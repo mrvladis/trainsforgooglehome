@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope" 
+    xmlns:typ="http://thalesgroup.com/RTTI/2013-11-28/Token/types" 
+    xmlns:ldb="http://thalesgroup.com/RTTI/2016-02-16/ldb/">
+    <soap:Header>
+        <typ:AccessToken>
+            <typ:TokenValue>**** token removed ****</typ:TokenValue>
+        </typ:AccessToken>
+    </soap:Header>
+    <soap:Body>
+        <ldb:GetDepartureBoardRequest>
+            <ldb:crs>OKL</ldb:crs>
+            <ldb:numRows>10</ldb:numRows>
+            <ldb:timeOffset>0</ldb:timeOffset>
+            <ldb:timeWindow>120</ldb:timeWindow>
+        </ldb:GetDepartureBoardRequest>
+    </soap:Body>
+</soap:Envelope>

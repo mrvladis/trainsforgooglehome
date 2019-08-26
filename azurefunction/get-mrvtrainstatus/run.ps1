@@ -1,31 +1,81 @@
-Write-Output " [$((Get-variable EXECUTION_CONTEXT_FUNCTIONNAME -ErrorAction SilentlyContinue ).value)] : PowerShell function executed at:$(get-date)";
-# Get an access token for the MSI
-$requestBody = Get-Content $fnrequest -Raw | ConvertFrom-Json
-$Simulate = $requestBody.Simulate
-$UserPrincipalName = $requestBody.UserPrincipalName
-$DirectoryID = $requestBody.DirectoryID
-$Success = $true
+using namespace System.Net
 
-Write-Output " [$((Get-variable EXECUTION_CONTEXT_FUNCTIONNAME -ErrorAction SilentlyContinue ).value)] : Endpoint: [$($env:MSI_ENDPOINT)]"
-$MSIToken = Get-MRVAzureMSIToken -MSISecret "$env:MSI_SECRET" -MSIEndpoint "$env:MSI_ENDPOINT" -resourceURI 'https://vault.azure.net'
-If ($MSIToken.result) {
-    Write-Output " [$((Get-variable EXECUTION_CONTEXT_FUNCTIONNAME -ErrorAction SilentlyContinue ).value)] : Successfully acquired the MSI Token"
-    $accessToken = $MSIToken.Token
-} else {
-    Write-Error "Failed to get a token"
-    return $false
+# Input bindings are passed in via param block.
+param($Request, $TriggerMetadata)
+
+
+function Execute-SOAPRequest 
+( 
+    [Xml]    $SOAPRequest, 
+    [String] $URL 
+) { 
+    write-host "Sending SOAP Request To Server: $URL" 
+    $soapWebRequest = [System.Net.WebRequest]::Create($URL) 
+    $soapWebRequest.Headers.Add("SOAPAction", "`"`"")
+
+
+    $soapWebRequest.ContentType = "text/xml;charset=`"utf-8`"" 
+    $soapWebRequest.Accept = "text/xml" 
+    $soapWebRequest.Method = "POST" 
+        
+    write-host "Initiating Send." 
+    $requestStream = $soapWebRequest.GetRequestStream() 
+    $SOAPRequest.Save($requestStream) 
+    $requestStream.Close() 
+        
+    write-host "Send Complete, Waiting For Response." 
+    $resp = $soapWebRequest.GetResponse() 
+    $responseStream = $resp.GetResponseStream() 
+    $soapReader = [System.IO.StreamReader]($responseStream) 
+    $ReturnXml = [Xml] $soapReader.ReadToEnd() 
+    $responseStream.Close() 
+        
+    write-host "Response Received."
+
+
+    return $ReturnXml 
 }
 
-Write-Output " [$((Get-variable EXECUTION_CONTEXT_FUNCTIONNAME -ErrorAction SilentlyContinue ).value)] : PSedition [$($PSVersionTable.PsEdition)]"
+# Write to the Azure Functions log stream.
+Write-Host "PowerShell HTTP trigger function processed a request."
 
-$currentTime = get-date
-Write-Output " [$((Get-variable EXECUTION_CONTEXT_FUNCTIONNAME -ErrorAction SilentlyContinue ).value)] : Function started at [$currentTime]"
+# Interact with query parameters or the body of the request.
 
-$access_token = (Invoke-RestMethod -Uri $("https://" + $($ENV:KeyVaultName) + ".vault.azure.net/secrets/" + $($Env:Secret_access_token) + "?api-version=2016-10-01") -Method GET -Headers @{Authorization = "Bearer $($MSIToken.token)" }).value    
- 
-$time_end = Get-Date
-Write-Output " [$((Get-variable EXECUTION_CONTEXT_FUNCTIONNAME -ErrorAction SilentlyContinue ).value)] :Function finished at [$time_end]"
-Write-Output " [$((Get-variable EXECUTION_CONTEXT_FUNCTIONNAME -ErrorAction SilentlyContinue ).value)] :Function has been running for $(($time_end - $currentTime).Hours) Hours and $(($time_end - $currentTime).Minutes) Minutes"
-$Reason = "Completed Successfully"
-$result = @{Result = $Success; Reason = $Reason; ResourceID = $ResourceID; Error = $($Error[0]) }
-Out-File -Encoding Ascii -FilePath $fnresult -inputObject $result
+$transport = $Request.Body.queryResult.parameters.transport
+Write-Output "Transport [$transport]"
+$period = $Request.Body.queryResult.parameters.period
+Write-Output "Period [$period]"
+$time = $Request.Body.queryResult.parameters.time
+Write-Output "Time [$time]"
+$date = $Request.Body.queryResult.parameters.date
+Write-Output "Date [$date]"
+
+Write-Output "--------------------------------------------------------------"
+Write-Output "------Full Request---------"
+Write-Output $Request
+
+$ldbwsendpoint = 'https://lite.realtime.nationalrail.co.uk/OpenLDBWS/ldb9.asmx'
+[xml]$xmlsampleldbws = Get-Content -Path "sampleldbws.xml"
+$xmlsampleldbws.Envelope.Header.AccessToken.TokenValue = $token
+Execute-SOAPRequest -URL $ldbwsendpoint  -SOAPRequest $xmlsampleldbws
+
+
+
+$name = $Request.Query.Name
+if (-not $name) {
+    $name = $Request.Body.Name
+}
+
+if ($name) {
+    $status = [HttpStatusCode]::OK
+    $body = "Hello $name"
+} else {
+    $status = [HttpStatusCode]::BadRequest
+    $body = "Please pass a name on the query string or in the request body."
+}
+
+# Associate values to output bindings by calling 'Push-OutputBinding'.
+Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
+        StatusCode = $status
+        Body       = $body
+    })
