@@ -1,0 +1,16 @@
+{
+    "bindings": [
+        {
+            "name": "fnrequest",
+            "type": "httpTrigger",
+            "direction": "in",
+            "authLevel": "function"
+        },
+        {
+            "name": "fnresult",
+            "type": "http",
+            "direction": "out"
+        }
+    ],
+    "disabled": false
+}
