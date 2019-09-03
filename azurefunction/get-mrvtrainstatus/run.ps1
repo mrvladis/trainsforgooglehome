@@ -31,6 +31,22 @@ function Execute-SOAPRequest
     return $ReturnXml
 }
 
+Write-Output "Loading Modules"
+Measure-Command { `
+    Write-Output "Loading MRVModule"
+    Import-Module "mrv_module" -Global;
+} | Select-Object Minutes, Seconds, Milliseconds
+Write-Output "All Modules loaded."
+
+Write-Output "Endpoint: [$($env:MSI_ENDPOINT)]"
+$MSIToken = Get-MRVAzureMSIToken -MSISecret "$env:MSI_SECRET" -MSIEndpoint "$env:MSI_ENDPOINT" -resourceURI 'https://vault.azure.net'
+If ($MSIToken.result) {
+    Write-Output "Successfully acquired the MSI Token"
+    $accessToken = $MSIToken.Token
+} else {
+    Write-Error "Failed to get a token"
+    return $false
+}
 # Write to the Azure Functions log stream.
 Write-Host "PowerShell HTTP trigger function processed a request."
 # Interact with query parameters or the body of the request.

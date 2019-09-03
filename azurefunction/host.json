@@ -10,5 +10,3 @@
     }
   }
 }
-
-mklink /J C:\Users\nedos\OneDrive\Work\Scripting\mrv\Projects\trainsforgooglehome\azurefunction\Modules\mrv_module C:\Users\nedos\OneDrive\Work\Scripting\mrv\mrv_module_GitHub\mrv_module
