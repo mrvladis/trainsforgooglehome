@@ -9,7 +9,9 @@
     <soapenv:Body>
         <ldb:GetArrBoardWithDetailsRequest>
             <ldb:numRows>10</ldb:numRows>
-            <ldb:crs>OKL</ldb:crs>
+            <ldb:crs>OLD</ldb:crs>
+            <ldb:filterCrs>?</ldb:filterCrs>
+            <ldb:filterType>to</ldb:filterType>
             <ldb:timeOffset>0</ldb:timeOffset>
             <ldb:timeWindow>60</ldb:timeWindow>
         </ldb:GetArrBoardWithDetailsRequest>
