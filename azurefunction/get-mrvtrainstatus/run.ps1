@@ -3,41 +3,103 @@ using namespace System.Net
 # Input bindings are passed in via param block.
 param($Request, $TriggerMetadata)
 $VerbosePreference = "Continue"
-function Execute-SOAPRequest
-(
-    [Xml]    $SOAPRequest,
-    [String] $URL
-) {
-    Write-Verbose "Sending SOAP Request To Server: $URL"
+Function Get-MRVAzureMSIToken {
+    param(
+        [Parameter(Mandatory = $false)]
+        [String]
+        $apiVersion = "2017-09-01",
+        [Parameter(Mandatory = $false)]
+        [String]
+        $resourceURI = "https://management.azure.com/",
+        [Parameter(Mandatory = $false)]
+        [String]
+        $MSISecret,
+        [Parameter(Mandatory = $false)]
+        [String]
+        $MSIEndpoint,
+        [Parameter(Mandatory = $false)]
+        [switch]
+        $VMMSI
+    )
+    $result = @{Result = $false; Token = $null; Reason = 'Failed to get token' }
+    If ($VMMSI) {
+        Write-Output "Runining in Context of the VM"
+        If (($MSIEndpoint -eq $null) -or ($MSIEndpoint -eq "")) {
+            Write-Output "No MSI endpoint provided. Assuming default one for the VM"
+            $MSIEndpoint = 'http://localhost:50342/oauth2/token'
+        }
+    }
+    If (($MSIEndpoint -eq $null) -or ($MSIEndpoint -eq "")) {
+        Write-Output "No MSI Endpont provided, checking in Environment Variables"
+        $MSIEndpoint = $env:MSI_ENDPOINT
+        if (($MSIEndpoint) -eq $null -or ($MSIEndpoint -eq "")) {
+            Write-Error "Can't find MSI endpoint in System Variables"
+            return $result
+        }
+    }
+    If (($MSISecret -eq $null) -or ($MSISecret -eq "")) {
+        Write-Output "No MSI Endpont provided, checking in Environment Variables"
+        $MSISecret = $env:MSI_SECRET
+        if (($MSIEndpoint) -eq $null -or ($MSIEndpoint -eq "")) {
+            Write-Error "Can't find MSI endpoint in System Variables"
+            return $result
+        }
+    }
+    Write-Output "Endpoint: [$MSIEndpoint]"
+    If ($VMMSI) {
+        $response = Invoke-WebRequest -Uri $MSIEndpoint -Method GET -Body @{resource = $resourceURI } -Headers @{Metadata = "true" }
+        $content = $response.Content | ConvertFrom-Json
+        $accessToken = $content.access_token
+    } else {
+        $tokenAuthURI = $MSIEndpoint + "?resource=$resourceURI&api-version=$apiVersion"
+        $tokenResponse = Invoke-RestMethod -Method Get -Headers @{"Secret" = "$env:MSI_SECRET" } -Uri $tokenAuthURI
+        $accessToken = $tokenResponse.access_token
+    }
+
+
+    if (($accessToken -eq $null) -or ($accessToken -eq "")) {
+        Write-Error "Failed to get Token. It is empty [$accessToken]"
+        return $result
+    } else {
+        $result = @{Result = $true; Token = $accessToken; Reason = 'Success' }
+        return $result
+    }
+}
+function Execute-SOAPRequest { 
+    param(
+        [Xml]    $SOAPRequest,
+        [String] $URL
+    ) 
+    Write-Output "Sending SOAP Request To Server: $URL"
     $soapWebRequest = [System.Net.WebRequest]::Create($URL)
     # $soapWebRequest.Headers.Add("SOAPAction", "`"`"")
     $soapWebRequest.ContentType = "text/xml;charset=utf-8"
     $soapWebRequest.Accept = "text/xml"
     $soapWebRequest.Method = "POST"
 
-    Write-Verbose "Initiating Send."
+    Write-Output "Initiating Send."
     $requestStream = $soapWebRequest.GetRequestStream()
     $SOAPRequest.Save($requestStream)
     $requestStream.Close()
 
-    Write-Verbose "Send Complete, Waiting For Response."
+    Write-Output "Send Complete, Waiting For Response."
     $resp = $soapWebRequest.GetResponse()
     $responseStream = $resp.GetResponseStream()
     $soapReader = [System.IO.StreamReader]($responseStream)
     $ReturnXml = [Xml] $soapReader.ReadToEnd()
     $responseStream.Close()
     
-    Write-Verbose "Response Received."
+    Write-Output "Response Received."
     return $ReturnXml
 }
 
-Write-Output "Loading Modules"
+<# Write-Output "Loading Modules"
 Measure-Command { `
-    Write-Output "Loading MRVModule"
+        Write-Output "Loading MRVModule"
     Import-Module "mrv_module" -Global;
 } | Select-Object Minutes, Seconds, Milliseconds
 Write-Output "All Modules loaded."
-
+ #>
 Write-Output "Endpoint: [$($env:MSI_ENDPOINT)]"
 $MSIToken = Get-MRVAzureMSIToken -MSISecret "$env:MSI_SECRET" -MSIEndpoint "$env:MSI_ENDPOINT" -resourceURI 'https://vault.azure.net'
 If ($MSIToken.result) {
@@ -61,25 +123,25 @@ $date = $Request.Body.queryResult.parameters.date
 Write-Output "Date [$date]"
 
 Write-Output "--------------------------------------------------------------"
-Write-Verbose "------Full Request---------"
-Write-Verbose $Request
+Write-Output "------Full Request---------"
+Write-Output $Request
 # -------------------------------- Variables ---------------------------------
-Write-Verbose "------Setting Variables---------"
+Write-Output "------Setting Variables---------"
 $GoogleHomeMessage = ''
 $ldbwsendpoint = 'https://lite.realtime.nationalrail.co.uk/OpenLDBWS/ldb11.asmx'
 
-Write-Verbose "------Trying to access token for the SOAP Call from KeyVault [$($ENV:KeyVaultName)] Using Secret [($env:MSI_SECRET)]---------"
-$Token = (Invoke-RestMethod -Uri $("https://" + $($ENV:KeyVaultName) + ".vault.azure.net/secrets/" + $($Env:VariableToken) + "?api-version=2016-10-01") -Method GET -Headers @{Authorization = "Bearer $($env:MSI_SECRET)" }).value    
+Write-Output "------Trying to access token for the SOAP Call from KeyVault [$($ENV:KeyVaultName)] Using Secret [($env:MSI_SECRET)]---------"
+$Token = (Invoke-RestMethod -Uri $("https://" + $($ENV:KeyVaultName) + ".vault.azure.net/secrets/" + $($Env:VariableToken) + "?api-version=2016-10-01") -Method GET -Headers @{Authorization = "Bearer $accessToken" }).value    
 
-Write-Verbose "------Loading Sample XML File---------"
+Write-Output "------Loading Sample XML File---------"
 [xml]$xmlsampleldbws = Get-Content -Path $(join-path "get-mrvtrainstatus" "sampleldbws.xml")
 $xmlsampleldbws.Envelope.Header.AccessToken.TokenValue = $token
 
 If ($VerbosePreference -like "Continue") {
-    Write-Verbose "----- Saving SOAP request XML File for debugging purposes---------"
+    Write-Output "----- Saving SOAP request XML File for debugging purposes---------"
     $xmlsampleldbws.Save("ldbws.xml");
 }
-Write-Verbose "------Executing SAOP request with formed XML File---------"
+Write-Output "------Executing SAOP request with formed XML File---------"
 $trainInfoResponse = Execute-SOAPRequest -URL $ldbwsendpoint  -SOAPRequest $xmlsampleldbws
 
 $CurrentStationName = $trainInfoResponse.Envelope.Body.GetArrBoardWithDetailsResponse.GetStationBoardResult.locationName
