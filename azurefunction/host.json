@@ -2,5 +2,13 @@
   "version": "2.0",
   "managedDependency": {
     "enabled": true
+  },
+  "logging": {
+    "logLevel": {
+      "Function.get-mrvtrainstatus": "Debug",
+      "default": "Trace"
+    }
   }
 }
+
+mklink /J C:\Users\nedos\OneDrive\Work\Scripting\mrv\Projects\trainsforgooglehome\azurefunction\Modules\mrv_module C:\Users\nedos\OneDrive\Work\Scripting\mrv\mrv_module_GitHub\mrv_module
