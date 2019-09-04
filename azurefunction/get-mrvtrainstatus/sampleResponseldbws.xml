@@ -1,24 +1,37 @@
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" 
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema">
    <soap:Body>
-      <GetArrBoardWithDetailsResponse xmlns="http://thalesgroup.com/RTTI/2017-10-01/ldb/">
-         <GetStationBoardResult xmlns:lt="http://thalesgroup.com/RTTI/2012-01-13/ldb/types" xmlns:lt6="http://thalesgroup.com/RTTI/2017-02-02/ldb/types" xmlns:lt7="http://thalesgroup.com/RTTI/2017-10-01/ldb/types" xmlns:lt4="http://thalesgroup.com/RTTI/2015-11-27/ldb/types" xmlns:lt5="http://thalesgroup.com/RTTI/2016-02-16/ldb/types" xmlns:lt2="http://thalesgroup.com/RTTI/2014-02-20/ldb/types" xmlns:lt3="http://thalesgroup.com/RTTI/2015-05-14/ldb/types">
-            <lt4:generatedAt>2019-08-26T17:25:05.3339184+01:00</lt4:generatedAt>
-            <lt4:locationName>Oakleigh Park</lt4:locationName>
-            <lt4:crs>OKL</lt4:crs>
+      <GetDepBoardWithDetailsResponse xmlns="http://thalesgroup.com/RTTI/2017-10-01/ldb/">
+         <GetStationBoardResult xmlns:lt="http://thalesgroup.com/RTTI/2012-01-13/ldb/types" 
+            xmlns:lt6="http://thalesgroup.com/RTTI/2017-02-02/ldb/types" 
+            xmlns:lt7="http://thalesgroup.com/RTTI/2017-10-01/ldb/types" 
+            xmlns:lt4="http://thalesgroup.com/RTTI/2015-11-27/ldb/types" 
+            xmlns:lt5="http://thalesgroup.com/RTTI/2016-02-16/ldb/types" 
+            xmlns:lt2="http://thalesgroup.com/RTTI/2014-02-20/ldb/types" 
+            xmlns:lt3="http://thalesgroup.com/RTTI/2015-05-14/ldb/types">
+            <lt4:generatedAt>2019-09-04T14:59:44.9278066+01:00</lt4:generatedAt>
+            <lt4:locationName>Moorgate</lt4:locationName>
+            <lt4:crs>MOG</lt4:crs>
+            <lt4:filterLocationName>Oakleigh Park</lt4:filterLocationName>
+            <lt4:filtercrs>OKL</lt4:filtercrs>
             <lt4:nrccMessages>
-               <lt:message>Major upgrade work is taking place near London Kings Cross. &lt;A href="https://www.nationalrail.co.uk/service_disruptions/222715.aspx">More details can be found here.&lt;/A></lt:message>
+               <lt:message><![CDATA[<P>Until late November 2019, there will be a reduced escalator service at Moorgate station. </P>
+<P>The one available escalator will be running up, used to exit the Moorgate line platforms. To reach the Moorgate line platforms from the ticket office, passengers should follow the signage and use the spiral staircase.</P>
+<P>Passengers who have difficulty using the spiral staircase should ask a member of staff for assistance.</P>
+<P>This is while TfL replace the escalators between the Great Northern platforms and the ticket office one at a time. The station may be busier than normal during busy morning and evening periods.</P>]]></lt:message>
             </lt4:nrccMessages>
             <lt4:platformAvailable>true</lt4:platformAvailable>
             <lt7:trainServices>
                <lt7:service>
-                  <lt4:sta>17:26</lt4:sta>
-                  <lt4:eta>On time</lt4:eta>
-                  <lt4:platform>4</lt4:platform>
+                  <lt4:std>15:00</lt4:std>
+                  <lt4:etd>On time</lt4:etd>
+                  <lt4:platform>9</lt4:platform>
                   <lt4:operator>Great Northern</lt4:operator>
                   <lt4:operatorCode>GN</lt4:operatorCode>
                   <lt4:serviceType>train</lt4:serviceType>
                   <lt4:length>6</lt4:length>
-                  <lt4:serviceID>X43RFe40YpACLzOgMaoh9A==</lt4:serviceID>
+                  <lt4:serviceID>uI1atpMRboZsHQfTSpIS9g==</lt4:serviceID>
                   <lt5:origin>
                      <lt4:location>
                         <lt4:locationName>Moorgate</lt4:locationName>
@@ -31,337 +44,125 @@
                         <lt4:crs>WGC</lt4:crs>
                      </lt4:location>
                   </lt5:destination>
-                  <lt7:previousCallingPoints>
+                  <lt7:subsequentCallingPoints>
                      <lt7:callingPointList>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Moorgate</lt7:locationName>
-                           <lt7:crs>MOG</lt7:crs>
-                           <lt7:st>16:58</lt7:st>
-                           <lt7:at>17:01</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Old Street</lt7:locationName>
                            <lt7:crs>OLD</lt7:crs>
-                           <lt7:st>17:00</lt7:st>
-                           <lt7:at>17:03</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Essex Road</lt7:locationName>
-                           <lt7:crs>EXR</lt7:crs>
-                           <lt7:st>17:03</lt7:st>
-                           <lt7:at>17:07</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Highbury &amp; Islington</lt7:locationName>
-                           <lt7:crs>HHY</lt7:crs>
-                           <lt7:st>17:06</lt7:st>
-                           <lt7:at>17:09</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Drayton Park</lt7:locationName>
-                           <lt7:crs>DYP</lt7:crs>
-                           <lt7:st>17:08</lt7:st>
-                           <lt7:at>17:11</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Finsbury Park</lt7:locationName>
-                           <lt7:crs>FPK</lt7:crs>
-                           <lt7:st>17:12</lt7:st>
-                           <lt7:at>17:14</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Harringay</lt7:locationName>
-                           <lt7:crs>HGY</lt7:crs>
-                           <lt7:st>17:14</lt7:st>
-                           <lt7:at>17:16</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Hornsey</lt7:locationName>
-                           <lt7:crs>HRN</lt7:crs>
-                           <lt7:st>17:16</lt7:st>
-                           <lt7:at>17:18</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Alexandra Palace</lt7:locationName>
-                           <lt7:crs>AAP</lt7:crs>
-                           <lt7:st>17:19</lt7:st>
-                           <lt7:at>On time</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>New Southgate</lt7:locationName>
-                           <lt7:crs>NSG</lt7:crs>
-                           <lt7:st>17:22</lt7:st>
-                           <lt7:at>On time</lt7:at>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                     </lt7:callingPointList>
-                  </lt7:previousCallingPoints>
-               </lt7:service>
-               <lt7:service>
-                  <lt4:sta>17:51</lt4:sta>
-                  <lt4:eta>On time</lt4:eta>
-                  <lt4:platform>1</lt4:platform>
-                  <lt4:operator>Great Northern</lt4:operator>
-                  <lt4:operatorCode>GN</lt4:operatorCode>
-                  <lt4:serviceType>train</lt4:serviceType>
-                  <lt4:length>6</lt4:length>
-                  <lt4:serviceID>M8PrE9KxB8kvk60TeX60pw==</lt4:serviceID>
-                  <lt5:origin>
-                     <lt4:location>
-                        <lt4:locationName>Welwyn Garden City</lt4:locationName>
-                        <lt4:crs>WGC</lt4:crs>
-                     </lt4:location>
-                  </lt5:origin>
-                  <lt5:destination>
-                     <lt4:location>
-                        <lt4:locationName>Moorgate</lt4:locationName>
-                        <lt4:crs>MOG</lt4:crs>
-                     </lt4:location>
-                  </lt5:destination>
-                  <lt7:previousCallingPoints>
-                     <lt7:callingPointList>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Welwyn Garden City</lt7:locationName>
-                           <lt7:crs>WGC</lt7:crs>
-                           <lt7:st>17:28</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Hatfield</lt7:locationName>
-                           <lt7:crs>HAT</lt7:crs>
-                           <lt7:st>17:33</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Welham Green</lt7:locationName>
-                           <lt7:crs>WMG</lt7:crs>
-                           <lt7:st>17:37</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Brookmans Park</lt7:locationName>
-                           <lt7:crs>BPK</lt7:crs>
-                           <lt7:st>17:39</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Potters Bar</lt7:locationName>
-                           <lt7:crs>PBR</lt7:crs>
-                           <lt7:st>17:43</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Hadley Wood</lt7:locationName>
-                           <lt7:crs>HDW</lt7:crs>
-                           <lt7:st>17:46</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>New Barnet</lt7:locationName>
-                           <lt7:crs>NBA</lt7:crs>
-                           <lt7:st>17:49</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                     </lt7:callingPointList>
-                  </lt7:previousCallingPoints>
-               </lt7:service>
-               <lt7:service>
-                  <lt4:sta>17:56</lt4:sta>
-                  <lt4:eta>On time</lt4:eta>
-                  <lt4:platform>4</lt4:platform>
-                  <lt4:operator>Great Northern</lt4:operator>
-                  <lt4:operatorCode>GN</lt4:operatorCode>
-                  <lt4:serviceType>train</lt4:serviceType>
-                  <lt4:length>6</lt4:length>
-                  <lt4:serviceID>UEN1eob0ad0iDSjmbDb6yw==</lt4:serviceID>
-                  <lt5:rsid>GN157800</lt5:rsid>
-                  <lt5:origin>
-                     <lt4:location>
-                        <lt4:locationName>Moorgate</lt4:locationName>
-                        <lt4:crs>MOG</lt4:crs>
-                     </lt4:location>
-                  </lt5:origin>
-                  <lt5:destination>
-                     <lt4:location>
-                        <lt4:locationName>Welwyn Garden City</lt4:locationName>
-                        <lt4:crs>WGC</lt4:crs>
-                     </lt4:location>
-                  </lt5:destination>
-                  <lt7:previousCallingPoints>
-                     <lt7:callingPointList>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Moorgate</lt7:locationName>
-                           <lt7:crs>MOG</lt7:crs>
-                           <lt7:st>17:29</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Old Street</lt7:locationName>
-                           <lt7:crs>OLD</lt7:crs>
-                           <lt7:st>17:31</lt7:st>
+                           <lt7:st>15:02</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Essex Road</lt7:locationName>
                            <lt7:crs>EXR</lt7:crs>
-                           <lt7:st>17:34</lt7:st>
+                           <lt7:st>15:05</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Highbury &amp; Islington</lt7:locationName>
                            <lt7:crs>HHY</lt7:crs>
-                           <lt7:st>17:37</lt7:st>
+                           <lt7:st>15:07</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Drayton Park</lt7:locationName>
                            <lt7:crs>DYP</lt7:crs>
-                           <lt7:st>17:39</lt7:st>
+                           <lt7:st>15:10</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Finsbury Park</lt7:locationName>
                            <lt7:crs>FPK</lt7:crs>
-                           <lt7:st>17:42</lt7:st>
+                           <lt7:st>15:13</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Harringay</lt7:locationName>
                            <lt7:crs>HGY</lt7:crs>
-                           <lt7:st>17:45</lt7:st>
+                           <lt7:st>15:16</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Hornsey</lt7:locationName>
                            <lt7:crs>HRN</lt7:crs>
-                           <lt7:st>17:47</lt7:st>
+                           <lt7:st>15:18</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Alexandra Palace</lt7:locationName>
                            <lt7:crs>AAP</lt7:crs>
-                           <lt7:st>17:49</lt7:st>
+                           <lt7:st>15:21</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>New Southgate</lt7:locationName>
                            <lt7:crs>NSG</lt7:crs>
-                           <lt7:st>17:52</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                     </lt7:callingPointList>
-                  </lt7:previousCallingPoints>
-               </lt7:service>
-               <lt7:service>
-                  <lt4:sta>18:21</lt4:sta>
-                  <lt4:eta>On time</lt4:eta>
-                  <lt4:platform>1</lt4:platform>
-                  <lt4:operator>Great Northern</lt4:operator>
-                  <lt4:operatorCode>GN</lt4:operatorCode>
-                  <lt4:serviceType>train</lt4:serviceType>
-                  <lt4:length>6</lt4:length>
-                  <lt4:serviceID>66a1NlwB1YGiHGJ4ekqtGw==</lt4:serviceID>
-                  <lt5:origin>
-                     <lt4:location>
-                        <lt4:locationName>Welwyn Garden City</lt4:locationName>
-                        <lt4:crs>WGC</lt4:crs>
-                     </lt4:location>
-                  </lt5:origin>
-                  <lt5:destination>
-                     <lt4:location>
-                        <lt4:locationName>Moorgate</lt4:locationName>
-                        <lt4:crs>MOG</lt4:crs>
-                     </lt4:location>
-                  </lt5:destination>
-                  <lt7:previousCallingPoints>
-                     <lt7:callingPointList>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Welwyn Garden City</lt7:locationName>
-                           <lt7:crs>WGC</lt7:crs>
-                           <lt7:st>17:58</lt7:st>
+                           <lt7:st>15:24</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
-                           <lt7:locationName>Hatfield</lt7:locationName>
-                           <lt7:crs>HAT</lt7:crs>
-                           <lt7:st>18:03</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Welham Green</lt7:locationName>
-                           <lt7:crs>WMG</lt7:crs>
-                           <lt7:st>18:07</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Brookmans Park</lt7:locationName>
-                           <lt7:crs>BPK</lt7:crs>
-                           <lt7:st>18:09</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Potters Bar</lt7:locationName>
-                           <lt7:crs>PBR</lt7:crs>
-                           <lt7:st>18:13</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Hadley Wood</lt7:locationName>
-                           <lt7:crs>HDW</lt7:crs>
-                           <lt7:st>18:16</lt7:st>
+                           <lt7:locationName>Oakleigh Park</lt7:locationName>
+                           <lt7:crs>OKL</lt7:crs>
+                           <lt7:st>15:28</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>New Barnet</lt7:locationName>
                            <lt7:crs>NBA</lt7:crs>
-                           <lt7:st>18:19</lt7:st>
+                           <lt7:st>15:30</lt7:st>
+                           <lt7:et>On time</lt7:et>
+                           <lt7:length>6</lt7:length>
+                        </lt7:callingPoint>
+                        <lt7:callingPoint>
+                           <lt7:locationName>Hadley Wood</lt7:locationName>
+                           <lt7:crs>HDW</lt7:crs>
+                           <lt7:st>15:33</lt7:st>
+                           <lt7:et>On time</lt7:et>
+                           <lt7:length>6</lt7:length>
+                        </lt7:callingPoint>
+                        <lt7:callingPoint>
+                           <lt7:locationName>Potters Bar</lt7:locationName>
+                           <lt7:crs>PBR</lt7:crs>
+                           <lt7:st>15:37</lt7:st>
+                           <lt7:et>On time</lt7:et>
+                           <lt7:length>6</lt7:length>
+                        </lt7:callingPoint>
+                        <lt7:callingPoint>
+                           <lt7:locationName>Hatfield</lt7:locationName>
+                           <lt7:crs>HAT</lt7:crs>
+                           <lt7:st>15:43</lt7:st>
+                           <lt7:et>On time</lt7:et>
+                           <lt7:length>6</lt7:length>
+                        </lt7:callingPoint>
+                        <lt7:callingPoint>
+                           <lt7:locationName>Welwyn Garden City</lt7:locationName>
+                           <lt7:crs>WGC</lt7:crs>
+                           <lt7:st>15:48</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                      </lt7:callingPointList>
-                  </lt7:previousCallingPoints>
+                  </lt7:subsequentCallingPoints>
                </lt7:service>
                <lt7:service>
-                  <lt4:sta>18:26</lt4:sta>
-                  <lt4:eta>On time</lt4:eta>
-                  <lt4:platform>4</lt4:platform>
+                  <lt4:std>15:20</lt4:std>
+                  <lt4:etd>On time</lt4:etd>
+                  <lt4:platform>9</lt4:platform>
                   <lt4:operator>Great Northern</lt4:operator>
                   <lt4:operatorCode>GN</lt4:operatorCode>
                   <lt4:serviceType>train</lt4:serviceType>
                   <lt4:length>6</lt4:length>
-                  <lt4:serviceID>t0vVyCWtN6p36P7ZpsYTxQ==</lt4:serviceID>
+                  <lt4:serviceID>tN1P2WzKb5rkawPzdg5yqg==</lt4:serviceID>
                   <lt5:origin>
                      <lt4:location>
                         <lt4:locationName>Moorgate</lt4:locationName>
@@ -374,329 +175,118 @@
                         <lt4:crs>WGC</lt4:crs>
                      </lt4:location>
                   </lt5:destination>
-                  <lt7:previousCallingPoints>
+                  <lt7:subsequentCallingPoints>
                      <lt7:callingPointList>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Moorgate</lt7:locationName>
-                           <lt7:crs>MOG</lt7:crs>
-                           <lt7:st>17:58</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Old Street</lt7:locationName>
                            <lt7:crs>OLD</lt7:crs>
-                           <lt7:st>18:00</lt7:st>
+                           <lt7:st>15:22</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Essex Road</lt7:locationName>
                            <lt7:crs>EXR</lt7:crs>
-                           <lt7:st>18:03</lt7:st>
+                           <lt7:st>15:25</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Highbury &amp; Islington</lt7:locationName>
                            <lt7:crs>HHY</lt7:crs>
-                           <lt7:st>18:06</lt7:st>
+                           <lt7:st>15:27</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Drayton Park</lt7:locationName>
                            <lt7:crs>DYP</lt7:crs>
-                           <lt7:st>18:08</lt7:st>
+                           <lt7:st>15:30</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Finsbury Park</lt7:locationName>
                            <lt7:crs>FPK</lt7:crs>
-                           <lt7:st>18:12</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Harringay</lt7:locationName>
-                           <lt7:crs>HGY</lt7:crs>
-                           <lt7:st>18:14</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Hornsey</lt7:locationName>
-                           <lt7:crs>HRN</lt7:crs>
-                           <lt7:st>18:16</lt7:st>
+                           <lt7:st>15:33</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Alexandra Palace</lt7:locationName>
                            <lt7:crs>AAP</lt7:crs>
-                           <lt7:st>18:19</lt7:st>
+                           <lt7:st>15:37</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>New Southgate</lt7:locationName>
                            <lt7:crs>NSG</lt7:crs>
-                           <lt7:st>18:22</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                     </lt7:callingPointList>
-                  </lt7:previousCallingPoints>
-               </lt7:service>
-               <lt7:service>
-                  <lt4:sta>18:51</lt4:sta>
-                  <lt4:eta>On time</lt4:eta>
-                  <lt4:platform>1</lt4:platform>
-                  <lt4:operator>Great Northern</lt4:operator>
-                  <lt4:operatorCode>GN</lt4:operatorCode>
-                  <lt4:serviceType>train</lt4:serviceType>
-                  <lt4:length>6</lt4:length>
-                  <lt4:serviceID>1pDUNER4ISUeO0v3e5CB7Q==</lt4:serviceID>
-                  <lt5:origin>
-                     <lt4:location>
-                        <lt4:locationName>Welwyn Garden City</lt4:locationName>
-                        <lt4:crs>WGC</lt4:crs>
-                     </lt4:location>
-                  </lt5:origin>
-                  <lt5:destination>
-                     <lt4:location>
-                        <lt4:locationName>Moorgate</lt4:locationName>
-                        <lt4:crs>MOG</lt4:crs>
-                     </lt4:location>
-                  </lt5:destination>
-                  <lt7:previousCallingPoints>
-                     <lt7:callingPointList>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Welwyn Garden City</lt7:locationName>
-                           <lt7:crs>WGC</lt7:crs>
-                           <lt7:st>18:28</lt7:st>
+                           <lt7:st>15:41</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
-                           <lt7:locationName>Hatfield</lt7:locationName>
-                           <lt7:crs>HAT</lt7:crs>
-                           <lt7:st>18:33</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Welham Green</lt7:locationName>
-                           <lt7:crs>WMG</lt7:crs>
-                           <lt7:st>18:37</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Brookmans Park</lt7:locationName>
-                           <lt7:crs>BPK</lt7:crs>
-                           <lt7:st>18:39</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Potters Bar</lt7:locationName>
-                           <lt7:crs>PBR</lt7:crs>
-                           <lt7:st>18:43</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Hadley Wood</lt7:locationName>
-                           <lt7:crs>HDW</lt7:crs>
-                           <lt7:st>18:46</lt7:st>
+                           <lt7:locationName>Oakleigh Park</lt7:locationName>
+                           <lt7:crs>OKL</lt7:crs>
+                           <lt7:st>15:44</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>New Barnet</lt7:locationName>
                            <lt7:crs>NBA</lt7:crs>
-                           <lt7:st>18:49</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                     </lt7:callingPointList>
-                  </lt7:previousCallingPoints>
-               </lt7:service>
-               <lt7:service>
-                  <lt4:sta>18:56</lt4:sta>
-                  <lt4:eta>On time</lt4:eta>
-                  <lt4:platform>4</lt4:platform>
-                  <lt4:operator>Great Northern</lt4:operator>
-                  <lt4:operatorCode>GN</lt4:operatorCode>
-                  <lt4:serviceType>train</lt4:serviceType>
-                  <lt4:length>6</lt4:length>
-                  <lt4:serviceID>JnmKXMy6Pc5DO4Mme8dT/g==</lt4:serviceID>
-                  <lt5:origin>
-                     <lt4:location>
-                        <lt4:locationName>Moorgate</lt4:locationName>
-                        <lt4:crs>MOG</lt4:crs>
-                     </lt4:location>
-                  </lt5:origin>
-                  <lt5:destination>
-                     <lt4:location>
-                        <lt4:locationName>Welwyn Garden City</lt4:locationName>
-                        <lt4:crs>WGC</lt4:crs>
-                     </lt4:location>
-                  </lt5:destination>
-                  <lt7:previousCallingPoints>
-                     <lt7:callingPointList>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Moorgate</lt7:locationName>
-                           <lt7:crs>MOG</lt7:crs>
-                           <lt7:st>18:28</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Old Street</lt7:locationName>
-                           <lt7:crs>OLD</lt7:crs>
-                           <lt7:st>18:30</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Essex Road</lt7:locationName>
-                           <lt7:crs>EXR</lt7:crs>
-                           <lt7:st>18:33</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Highbury &amp; Islington</lt7:locationName>
-                           <lt7:crs>HHY</lt7:crs>
-                           <lt7:st>18:36</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Drayton Park</lt7:locationName>
-                           <lt7:crs>DYP</lt7:crs>
-                           <lt7:st>18:38</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Finsbury Park</lt7:locationName>
-                           <lt7:crs>FPK</lt7:crs>
-                           <lt7:st>18:42</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Harringay</lt7:locationName>
-                           <lt7:crs>HGY</lt7:crs>
-                           <lt7:st>18:44</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Hornsey</lt7:locationName>
-                           <lt7:crs>HRN</lt7:crs>
-                           <lt7:st>18:46</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Alexandra Palace</lt7:locationName>
-                           <lt7:crs>AAP</lt7:crs>
-                           <lt7:st>18:49</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>New Southgate</lt7:locationName>
-                           <lt7:crs>NSG</lt7:crs>
-                           <lt7:st>18:52</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                     </lt7:callingPointList>
-                  </lt7:previousCallingPoints>
-               </lt7:service>
-               <lt7:service>
-                  <lt4:sta>19:21</lt4:sta>
-                  <lt4:eta>On time</lt4:eta>
-                  <lt4:platform>1</lt4:platform>
-                  <lt4:operator>Great Northern</lt4:operator>
-                  <lt4:operatorCode>GN</lt4:operatorCode>
-                  <lt4:serviceType>train</lt4:serviceType>
-                  <lt4:length>6</lt4:length>
-                  <lt4:serviceID>P5Zd3b238Oz9LReSfWsXGw==</lt4:serviceID>
-                  <lt5:origin>
-                     <lt4:location>
-                        <lt4:locationName>Welwyn Garden City</lt4:locationName>
-                        <lt4:crs>WGC</lt4:crs>
-                     </lt4:location>
-                  </lt5:origin>
-                  <lt5:destination>
-                     <lt4:location>
-                        <lt4:locationName>Moorgate</lt4:locationName>
-                        <lt4:crs>MOG</lt4:crs>
-                     </lt4:location>
-                  </lt5:destination>
-                  <lt7:previousCallingPoints>
-                     <lt7:callingPointList>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Welwyn Garden City</lt7:locationName>
-                           <lt7:crs>WGC</lt7:crs>
-                           <lt7:st>18:58</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Hatfield</lt7:locationName>
-                           <lt7:crs>HAT</lt7:crs>
-                           <lt7:st>19:03</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Welham Green</lt7:locationName>
-                           <lt7:crs>WMG</lt7:crs>
-                           <lt7:st>19:07</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Brookmans Park</lt7:locationName>
-                           <lt7:crs>BPK</lt7:crs>
-                           <lt7:st>19:09</lt7:st>
-                           <lt7:et>On time</lt7:et>
-                           <lt7:length>6</lt7:length>
-                        </lt7:callingPoint>
-                        <lt7:callingPoint>
-                           <lt7:locationName>Potters Bar</lt7:locationName>
-                           <lt7:crs>PBR</lt7:crs>
-                           <lt7:st>19:13</lt7:st>
+                           <lt7:st>15:46</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
                            <lt7:locationName>Hadley Wood</lt7:locationName>
                            <lt7:crs>HDW</lt7:crs>
-                           <lt7:st>19:16</lt7:st>
+                           <lt7:st>15:49</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                         <lt7:callingPoint>
-                           <lt7:locationName>New Barnet</lt7:locationName>
-                           <lt7:crs>NBA</lt7:crs>
-                           <lt7:st>19:19</lt7:st>
+                           <lt7:locationName>Potters Bar</lt7:locationName>
+                           <lt7:crs>PBR</lt7:crs>
+                           <lt7:st>15:53</lt7:st>
+                           <lt7:et>On time</lt7:et>
+                           <lt7:length>6</lt7:length>
+                        </lt7:callingPoint>
+                        <lt7:callingPoint>
+                           <lt7:locationName>Brookmans Park</lt7:locationName>
+                           <lt7:crs>BPK</lt7:crs>
+                           <lt7:st>15:56</lt7:st>
+                           <lt7:et>On time</lt7:et>
+                           <lt7:length>6</lt7:length>
+                        </lt7:callingPoint>
+                        <lt7:callingPoint>
+                           <lt7:locationName>Welham Green</lt7:locationName>
+                           <lt7:crs>WMG</lt7:crs>
+                           <lt7:st>15:59</lt7:st>
+                           <lt7:et>On time</lt7:et>
+                           <lt7:length>6</lt7:length>
+                        </lt7:callingPoint>
+                        <lt7:callingPoint>
+                           <lt7:locationName>Hatfield</lt7:locationName>
+                           <lt7:crs>HAT</lt7:crs>
+                           <lt7:st>16:02</lt7:st>
+                           <lt7:et>On time</lt7:et>
+                           <lt7:length>6</lt7:length>
+                        </lt7:callingPoint>
+                        <lt7:callingPoint>
+                           <lt7:locationName>Welwyn Garden City</lt7:locationName>
+                           <lt7:crs>WGC</lt7:crs>
+                           <lt7:st>16:07</lt7:st>
                            <lt7:et>On time</lt7:et>
                            <lt7:length>6</lt7:length>
                         </lt7:callingPoint>
                      </lt7:callingPointList>
-                  </lt7:previousCallingPoints>
+                  </lt7:subsequentCallingPoints>
                </lt7:service>
             </lt7:trainServices>
          </GetStationBoardResult>
-      </GetArrBoardWithDetailsResponse>
+      </GetDepBoardWithDetailsResponse>
    </soap:Body>
 </soap:Envelope>

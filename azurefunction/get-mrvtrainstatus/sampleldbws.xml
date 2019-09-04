@@ -3,17 +3,17 @@
     xmlns:ldb="http://thalesgroup.com/RTTI/2017-10-01/ldb/">
     <soapenv:Header>
         <typ:AccessToken>
-            <typ:TokenValue>tokenwashere</typ:TokenValue>
+            <typ:TokenValue>TokenWasHere</typ:TokenValue>
         </typ:AccessToken>
     </soapenv:Header>
     <soapenv:Body>
-        <ldb:GetArrBoardWithDetailsRequest>
+        <ldb:GetDepBoardWithDetailsRequest>
             <ldb:numRows>10</ldb:numRows>
-            <ldb:crs>OLD</ldb:crs>
+            <ldb:crs>OKL</ldb:crs>
             <ldb:filterCrs>?</ldb:filterCrs>
             <ldb:filterType>to</ldb:filterType>
             <ldb:timeOffset>0</ldb:timeOffset>
             <ldb:timeWindow>60</ldb:timeWindow>
-        </ldb:GetArrBoardWithDetailsRequest>
+        </ldb:GetDepBoardWithDetailsRequest>
     </soapenv:Body>
 </soapenv:Envelope>
