@@ -120,7 +120,7 @@ $period = $Request.Body.queryResult.parameters.period
 Write-Output "Period [$period]"
 $direction = $Request.Body.queryResult.parameters.direction
 Write-Output "Direction [$direction]"
-$station = $Request.Body.queryResult.parameters.stdtion
+$station = $Request.Body.queryResult.parameters.station
 Write-Output "Station [$station]"
 $time = $Request.Body.queryResult.parameters.time
 Write-Output "Time [$time]"
