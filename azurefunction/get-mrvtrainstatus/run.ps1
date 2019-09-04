@@ -113,10 +113,15 @@ If ($MSIToken.result) {
 Write-Host "PowerShell HTTP trigger function processed a request."
 # Interact with query parameters or the body of the request.
 
+
 $transport = $Request.Body.queryResult.parameters.transport
 Write-Output "Transport [$transport]"
 $period = $Request.Body.queryResult.parameters.period
 Write-Output "Period [$period]"
+$direction = $Request.Body.queryResult.parameters.direction
+Write-Output "Direction [$direction]"
+$station = $Request.Body.queryResult.parameters.station
+Write-Output "Station [$station]"
 $time = $Request.Body.queryResult.parameters.time
 Write-Output "Time [$time]"
 $date = $Request.Body.queryResult.parameters.date
@@ -128,37 +133,118 @@ Write-Output $Request
 # -------------------------------- Variables ---------------------------------
 Write-Output "------Setting Variables---------"
 $GoogleHomeMessage = ''
+$FilterByDestination = $false
+$FilterBycurrentStation = $false
+$DefaultTimeFrame = $($ENV:DefaultTimeFrame)
+$destinationPreposition = 'to'
+$currentPreposition = 'from'
 $ldbwsendpoint = 'https://lite.realtime.nationalrail.co.uk/OpenLDBWS/ldb11.asmx'
 
 Write-Output "------Trying to access token for the SOAP Call from KeyVault [$($ENV:KeyVaultName)] Using Secret [($env:MSI_SECRET)]---------"
 $Token = (Invoke-RestMethod -Uri $("https://" + $($ENV:KeyVaultName) + ".vault.azure.net/secrets/" + $($Env:VariableToken) + "?api-version=2016-10-01") -Method GET -Headers @{Authorization = "Bearer $accessToken" }).value    
 
+Write-Output "------Loading Station Codes File---------"
+$StationCodes = Import-Csv -Path $(join-path "get-mrvtrainstatus" "station_codes.csv")
 Write-Output "------Loading Sample XML File---------"
 [xml]$xmlsampleldbws = Get-Content -Path $(join-path "get-mrvtrainstatus" "sampleldbws.xml")
+
+<# 
+$direction = @("from", "to")
+$station = @("Moorgate", "Oakleigh Park")
+    #>
+
+
+If (($direction.Count -ge 2) -and ($station.Count -ge 2)) {
+    $destination = $station[$direction.IndexOf($destinationPreposition)]
+    $currentStation = $station[$direction.IndexOf($currentPreposition)]
+    Write-Output "Destination Station identified as [$destination]"
+    Write-Output "Current Station identified as [$currentStation]"
+}
+
+if (($destination -ne '') -and ($destination -ne $null)) { 
+    $DestinationCode = ($StationCodes | ? "Station Name" -like $destination)."CRS Code"
+    if (($DestinationCode -ne '') -and ($DestinationCode -ne $null)) {
+        Write-Output "Destination Station code identified as [$DestinationCode]"
+        $FilterByDestination = $true
+    }
+}
+
+if ($FilterByDestination) {
+    Write-Output "Preparing SOAP payload to use Destination Station code [$DestinationCode]"
+    $xmlsampleldbws.Envelope.Body.GetDepBoardWithDetailsRequest.filterCrs = $DestinationCode
+} else {
+    Write-Output "Removing Destination Station Properties from SOAP payload"
+    $NodeFilterCrs = $xmlsampleldbws.Envelope.Body.GetDepBoardWithDetailsRequest.Item("ldb:filterCrs")
+    $xmlsampleldbws.Envelope.Body.GetDepBoardWithDetailsRequest.RemoveChild($NodeFilterCrs)
+    $NodeFilterCrs = $xmlsampleldbws.Envelope.Body.GetDepBoardWithDetailsRequest.Item("ldb:filterType")
+    $xmlsampleldbws.Envelope.Body.GetDepBoardWithDetailsRequest.RemoveChild($NodeFilterCrs)
+}
+
+if (($currentStation -ne '') -and ($currentStation -ne $null)) { 
+    $currentStationCode = ($StationCodes | ? "Station Name" -like $currentStation)."CRS Code"
+    if (($currentStationCode -ne '') -and ($currentStationCode -ne $null)) {
+        Write-Output "Current Station code identified as [$currentStationCode]"
+        $FilterBycurrentStation = $true
+    }
+}
+
+if ($FilterBycurrentStation) {
+    Write-Output "Preparing SOAP payload to use Current Station code [$currentStationCode]"
+    $xmlsampleldbws.Envelope.Body.GetDepBoardWithDetailsRequest.crs = $currentStationCode
+}
+Write-Output "------Preparing XML Request---------"
 $xmlsampleldbws.Envelope.Header.AccessToken.TokenValue = $token
+$xmlsampleldbws.Envelope.Body.GetDepBoardWithDetailsRequest.timeWindow = $DefaultTimeFrame
 
 If ($VerbosePreference -like "Continue") {
     Write-Output "----- Saving SOAP request XML File for debugging purposes---------"
-    $xmlsampleldbws.Save("ldbws.xml");
+    # $xmlsampleldbws.Save("ldbws.xml")
 }
 Write-Output "------Executing SAOP request with formed XML File---------"
 $trainInfoResponse = Execute-SOAPRequest -URL $ldbwsendpoint  -SOAPRequest $xmlsampleldbws
 
-$CurrentStationName = $trainInfoResponse.Envelope.Body.GetArrBoardWithDetailsResponse.GetStationBoardResult.locationName
+# [xml]$trainInfoResponse = Get-Content -Path $(join-path "get-mrvtrainstatus" "sampleResponseldbws.xml")
+If ($VerbosePreference -like "Continue") {
+    Write-Output "----- Saving SOAP response XML File for debugging purposes---------"
+    # $trainInfoResponse | Out-File -Append $(join-path "get-mrvtrainstatus" "trainInfoResponse.xml")
+    # Write-Output $trainInfoResponse
+}
+$CurrentStationName = $trainInfoResponse.Envelope.Body.GetDepBoardWithDetailsResponse.GetStationBoardResult.locationName
 
-$WarningMessage = $trainInfoResponse.Envelope.Body.GetArrBoardWithDetailsResponse.GetStationBoardResult.nrccMessages.message
+$WarningMessage = $trainInfoResponse.Envelope.Body.GetDepBoardWithDetailsResponse.GetStationBoardResult.nrccMessages.message
 If (($WarningMessage -ne $null) -and ($WarningMessage -ne '')) {
+    if ($WarningMessage.'#cdata-section') {
+        $WarningMessage = $WarningMessage.'#cdata-section'
+    } else {
+        Write-Output "Using just message"
+    }
+    
     $WarningMessage = $WarningMessage.Substring(0, $WarningMessage.IndexOf('<'))
     $GoogleHomeMessage = "It seems like not everything is well with the trains currently. `n"
     $GoogleHomeMessage += "The following warning is advertised for the $CurrentStationName station:  `n"
     $GoogleHomeMessage += $WarningMessage + "`n"
+    Write-Output "Warning Message [$WarningMessage]"
+    Write-Output "Warning Message Type [$($WarningMessage.gettype())]"
+    Write-Output "Warning Message Type [$($WarningMessage.lenght)]"
 }
-$CurrentServices = $trainInfoResponse.Envelope.Body.GetArrBoardWithDetailsResponse.GetStationBoardResult.trainServices.service
+$CurrentServices = $trainInfoResponse.Envelope.Body.GetDepBoardWithDetailsResponse.GetStationBoardResult.trainServices.service
 if (($CurrentServices -ne $null) -and ($CurrentServices -ne '')) {
-    $GoogleHomeMessage += "There are currently $($CurrentServices.Count) services scheduled for $CurrentStationName : "
+
+    $GoogleHomeMessage += "There are currently $($CurrentServices.Count) services scheduled from $CurrentStationName within the next $DefaultTimeFrame minutes: "
+    
     foreach ($service in $CurrentServices) { 
-        $GoogleHomeMessage += "$($service.sta) $($service.operator) $($service.destination.location.locationName) service running $($service.eta) formed of  $($service.length) carriages.  `n"
+        if (($service.etd) -like 'Cancelled') {
+            $message = "$($service.std) $($service.operator) $($service.destination.location.locationName) service has been $($service.etd).  `n"
+        } else {
+            $message = "$($service.std) $($service.operator) $($service.destination.location.locationName) service running $($service.etd) formed of  $($service.length) carriages.  `n"
+        }
+        $GoogleHomeMessage += $message
+        Write-Output $message
     }
+} else {
+    $message = "There are currently no direct services scheduled within the next $DefaultTimeFrame minutes from $currentStation to $destination  `n"
+    $GoogleHomeMessage += $message
+    Write-Output $message
 }
 
 $Myresponse = [PSCustomObject]@{
