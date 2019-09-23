@@ -30,7 +30,7 @@ Function Get-MRVAzureMSIToken {
         }
     }
     If (($MSIEndpoint -eq $null) -or ($MSIEndpoint -eq "")) {
-        Write-Output "No MSI Endpont provided, checking in Environment Variables"
+        Write-Output "No MSI Endpoint provided, checking in Environment Variables"
         $MSIEndpoint = $env:MSI_ENDPOINT
         if (($MSIEndpoint) -eq $null -or ($MSIEndpoint -eq "")) {
             Write-Error "Can't find MSI endpoint in System Variables"
@@ -38,10 +38,10 @@ Function Get-MRVAzureMSIToken {
         }
     }
     If (($MSISecret -eq $null) -or ($MSISecret -eq "")) {
-        Write-Output "No MSI Endpont provided, checking in Environment Variables"
+        Write-Output "No MSI Secret provided, checking in Environment Variables"
         $MSISecret = $env:MSI_SECRET
         if (($MSIEndpoint) -eq $null -or ($MSIEndpoint -eq "")) {
-            Write-Error "Can't find MSI endpoint in System Variables"
+            Write-Error "Can't find MSI Secret in System Variables"
             return $result
         }
     }
@@ -69,7 +69,7 @@ function Execute-SOAPRequest {
     param(
         [Xml]    $SOAPRequest,
         [String] $URL
-    ) 
+    )
     Write-Output "Sending SOAP Request To Server: $URL"
     $soapWebRequest = [System.Net.WebRequest]::Create($URL)
     # $soapWebRequest.Headers.Add("SOAPAction", "`"`"")
@@ -88,7 +88,7 @@ function Execute-SOAPRequest {
     $soapReader = [System.IO.StreamReader]($responseStream)
     $ReturnXml = [Xml] $soapReader.ReadToEnd()
     $responseStream.Close()
-    
+
     Write-Output "Response Received."
     return $ReturnXml
 }
@@ -111,9 +111,7 @@ If ($MSIToken.result) {
 }
 # Write to the Azure Functions log stream.
 Write-Host "PowerShell HTTP trigger function processed a request."
-# Interact with query parameters or the body of the request.
-
-
+# Extract parameters from the body of the request.
 $transport = $Request.Body.queryResult.parameters.transport
 Write-Output "Transport [$transport]"
 $period = $Request.Body.queryResult.parameters.period
@@ -134,14 +132,13 @@ Write-Output $Request
 Write-Output "------Setting Variables---------"
 $GoogleHomeMessage = ''
 $FilterByDestination = $false
-$FilterBycurrentStation = $false
+$FilterByCurrentStation = $false
+$destinationPreposition = $($ENV:destinationPreposition)
+$currentPreposition = $($ENV:currentPreposition)
 $DefaultTimeFrame = $($ENV:DefaultTimeFrame)
-$destinationPreposition = 'to'
-$currentPreposition = 'from'
-$ldbwsendpoint = 'https://lite.realtime.nationalrail.co.uk/OpenLDBWS/ldb11.asmx'
-
-Write-Output "------Trying to access token for the SOAP Call from KeyVault [$($ENV:KeyVaultName)] Using Secret [($env:MSI_SECRET)]---------"
-$Token = (Invoke-RestMethod -Uri $("https://" + $($ENV:KeyVaultName) + ".vault.azure.net/secrets/" + $($Env:VariableToken) + "?api-version=2016-10-01") -Method GET -Headers @{Authorization = "Bearer $accessToken" }).value    
+$ldbwsEndpoint = $($ENV:ldbwsendpoint)
+Write-Output "------Trying to access token for the SOAP Call from KeyVault [$($ENV:KeyVaultName)] Using Secret [$($env:MSI_SECRET)]---------"
+$Token = (Invoke-RestMethod -Uri $("https://" + $($ENV:KeyVaultName) + ".vault.azure.net/secrets/" + $($Env:TokenName) + "?api-version=2016-10-01") -Method GET -Headers @{Authorization = "Bearer $accessToken" }).value
 
 Write-Output "------Loading Station Codes File---------"
 $StationCodes = Import-Csv -Path $(join-path "get-mrvtrainstatus" "station_codes.csv")
@@ -210,7 +207,6 @@ If ($VerbosePreference -like "Continue") {
     # Write-Output $trainInfoResponse
 }
 $CurrentStationName = $trainInfoResponse.Envelope.Body.GetDepBoardWithDetailsResponse.GetStationBoardResult.locationName
-
 $WarningMessage = $trainInfoResponse.Envelope.Body.GetDepBoardWithDetailsResponse.GetStationBoardResult.nrccMessages.message
 If (($WarningMessage -ne $null) -and ($WarningMessage -ne '')) {
     if ($WarningMessage.'#cdata-section') {
@@ -229,9 +225,7 @@ If (($WarningMessage -ne $null) -and ($WarningMessage -ne '')) {
 }
 $CurrentServices = $trainInfoResponse.Envelope.Body.GetDepBoardWithDetailsResponse.GetStationBoardResult.trainServices.service
 if (($CurrentServices -ne $null) -and ($CurrentServices -ne '')) {
-
     $GoogleHomeMessage += "There are currently $($CurrentServices.Count) services scheduled from $CurrentStationName within the next $DefaultTimeFrame minutes: "
-    
     foreach ($service in $CurrentServices) { 
         if (($service.etd) -like 'Cancelled') {
             $message = "$($service.std) $($service.operator) $($service.destination.location.locationName) service has been $($service.etd).  `n"
