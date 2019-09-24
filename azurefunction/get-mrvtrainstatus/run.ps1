@@ -156,7 +156,12 @@ If (($direction.Count -ge 2) -and ($station.Count -ge 2)) {
     $currentStation = $station[$direction.IndexOf($currentPreposition)]
     Write-Output "Destination Station identified as [$destination]"
     Write-Output "Current Station identified as [$currentStation]"
-}
+# } elseif (($direction.Count -eq 1 -and ($station.Count -eq 1))) {
+#     if ($direction[0] -like $destinationPreposition ) {
+#         Write-Output "Request only has a destination station. Falling back to predefined source station"
+#         $destination = $station[0]
+#     }  
+# }
 
 if (($destination -ne '') -and ($destination -ne $null)) { 
     $DestinationCode = ($StationCodes | ? "Station Name" -like $destination)."CRS Code"
@@ -214,7 +219,6 @@ If (($WarningMessage -ne $null) -and ($WarningMessage -ne '')) {
     } else {
         Write-Output "Using just message"
     }
-    
     $WarningMessage = $WarningMessage.Substring(0, $WarningMessage.IndexOf('<'))
     $GoogleHomeMessage = "It seems like not everything is well with the trains currently. `n"
     $GoogleHomeMessage += "The following warning is advertised for the $CurrentStationName station:  `n"
